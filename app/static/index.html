@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Speech Emotion Recognition</title>
+  </head>
+  <body>
+    <h1>Upload Audio</h1>
+    <input type="file" id="audioFile" accept="audio/*">
+    <button onclick="uploadAudio()">Upload</button>
+    <p id="result"></p>
+
+    <script>
+      async function uploadAudio() {
+        const fileInput = document.getElementById('audioFile');
+        const file = fileInput.files[0];
+        const formData = new FormData();
+        formData.append("file", file);
+        const res = await fetch("/predict/", {
+          method: "POST",
+          body: formData
+        });
+        const data = await res.json();
+        document.getElementById('result').innerText = "Predicted Emotion: " + data.emotion;
+      }
+    </script>
+  </body>
+</html>

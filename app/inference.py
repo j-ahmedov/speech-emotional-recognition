@@ -8,8 +8,12 @@ from app.models import load_model
 model = load_model()
 model.eval()  # Set model to eval mode
 
-# Define emotion labels in the same order used during training
-EMOTIONS = ['disgust', 'joy', 'neutral', 'fear', 'anger', 'surprise', 'sadness']
+# # Define emotion labels in the same order used during training
+# EMOTIONS = ['disgust', 'joy', 'neutral', 'fear', 'anger', 'surprise', 'sadness']
+EMOTIONS = np.load("label_classes.npy").tolist()
+print("===\n\n")
+print(EMOTIONS)
+print("\n\n===")
 
 
 def extract_features(audio_bytes):
@@ -33,7 +37,7 @@ def predict_emotion(audio_bytes):
 
 
 # Optional test block
-if __name__ == "__main__":
-    with open("test.wav", "rb") as f:
-        audio_bytes = f.read()
-    print("Predicted emotion:", predict_emotion(audio_bytes))
+# if __name__ == "__main__":
+#     with open("test.wav", "rb") as f:
+#         audio_bytes = f.read()
+#     print("Predicted emotion:", predict_emotion(audio_bytes))

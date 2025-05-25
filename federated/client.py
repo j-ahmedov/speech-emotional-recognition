@@ -14,6 +14,7 @@ X = np.array([x[0] for x in data])
 y = np.array([x[1] for x in data])
 le = LabelEncoder()
 y = le.fit_transform(y)
+np.save("label_classes.npy", le.classes_)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 

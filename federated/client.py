@@ -24,7 +24,7 @@ class Client(fl.client.NumPyClient):
     def __init__(self):
         self.model = EmotionRecognitionModel()
 
-    def get_parameters(self):
+    def get_parameters(self, config):
         return [val.cpu().numpy() for val in self.model.state_dict().values()]
 
     def set_parameters(self, parameters):
@@ -43,17 +43,21 @@ class Client(fl.client.NumPyClient):
                 loss = loss_fn(self.model(X_batch), y_batch)
                 loss.backward()
                 optimizer.step()
-        return self.get_parameters(), len(train_loader.dataset), {}
+        return self.get_parameters(config), len(train_loader.dataset), {}
 
     def evaluate(self, parameters, config):
         self.set_parameters(parameters)
         self.model.eval()
-        correct, total = 0, 0
+        loss_fn = torch.nn.CrossEntropyLoss()
+        loss, correct, total = 0.0, 0, 0
         with torch.no_grad():
             for X_batch, y_batch in test_loader:
-                pred = self.model(X_batch).argmax(dim=1)
+                outputs = self.model(X_batch)
+                loss += loss_fn(outputs, y_batch).item() * y_batch.size(0)
+                pred = outputs.argmax(dim=1)
                 correct += (pred == y_batch).sum().item()
                 total += y_batch.size(0)
-        return correct / total, total, {}
+        return loss / total, total, {"accuracy": correct / total}
 
-fl.client.start_numpy_client("localhost:8080", client=Client())
+if __name__ == "__main__":
+    fl.client.start_numpy_client(server_address="localhost:8080", client=Client())

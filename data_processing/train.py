@@ -7,6 +7,7 @@ project_root = Path(__file__).parent.parent.resolve()
 sys.path.append(str(project_root))
 
 from app.models import EmotionRecognitionModel
+from sklearn.preprocessing import LabelEncoder
 
 
 def load_all_data(data_folder):
@@ -17,9 +18,10 @@ def load_all_data(data_folder):
         y_list.extend([item[1] for item in data])
 
     X = np.array(X_list, dtype=np.float32)
-    y = np.array(y_list, dtype=np.int64)
+    # Use LabelEncoder here to convert string labels to ints
+    le = LabelEncoder()
+    y = le.fit_transform(y_list)
     return X, y
-
 
 def train():
     project_root = Path(__file__).parent.parent.resolve()

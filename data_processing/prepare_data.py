@@ -8,30 +8,39 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 EMOTIONS = {
     'dis': 'disgust',
     'gio': 'joy',
+    'neu': 'neutral',
     'pau': 'fear',
     'rab': 'anger',
     'sor': 'surprise',
     'tri': 'sadness',
-    'neu': 'neutral'
 }
 
+# Function to extract MFCC features from a WAV file
 def extract_features(file_path):
-    y, sr = librosa.load(file_path, sr=16000)
-    mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=40)
-    return np.mean(mfcc.T, axis=0)
+    try:
+        y, sr = librosa.load(file_path, sr=16000)
+        mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=40)
+        return np.mean(mfcc.T, axis=0)
+    except Exception as e:
+        print(f"[ERROR] Could not process {file_path}: {e}")
+        return None
 
+# Process all audio files from a single actor
 def process_actor(actor_folder):
     data = []
     for file in os.listdir(actor_folder):
         if file.endswith(".wav"):
-            parts = file.replace('.wav', '').split('-')
-            if len(parts) == 3:
+            try:
+                parts = file.replace('.wav', '').split('-')
                 emotion_code, speaker, _ = parts
                 emotion = EMOTIONS.get(emotion_code)
                 if emotion:
                     path = os.path.join(actor_folder, file)
                     features = extract_features(path)
-                    data.append((features, emotion))
+                    if features is not None:
+                        data.append((features, emotion))
+            except ValueError:
+                print(f"[WARNING] Skipping file with unexpected name format: {file}")
     return data
 
 def process_all(base_path="emovo_data"):

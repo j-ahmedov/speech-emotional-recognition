@@ -1,27 +1,73 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Speech Emotion Recognition</title>
-  </head>
-  <body>
-    <h1>Upload Audio</h1>
-    <input type="file" id="audioFile" accept="audio/*">
-    <button onclick="uploadAudio()">Upload</button>
-    <p id="result"></p>
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--  <head>-->
+<!--    <title>Speech Emotion Recognition</title>-->
+<!--  </head>-->
+<!--  <body>-->
+<!--    <h1>Upload Audio</h1>-->
+<!--    <input type="file" id="audioFile" accept="audio/*">-->
+<!--    <button onclick="uploadAudio()">Upload</button>-->
+<!--    <p id="result"></p>-->
 
-    <script>
-      async function uploadAudio() {
-        const fileInput = document.getElementById('audioFile');
-        const file = fileInput.files[0];
-        const formData = new FormData();
-        formData.append("file", file);
-        const res = await fetch("/predict/", {
-          method: "POST",
-          body: formData
-        });
-        const data = await res.json();
-        document.getElementById('result').innerText = "Predicted Emotion: " + data.emotion;
-      }
-    </script>
+<!--    <script>-->
+<!--      async function uploadAudio() {-->
+<!--        const fileInput = document.getElementById('audioFile');-->
+<!--        const file = fileInput.files[0];-->
+<!--        const formData = new FormData();-->
+<!--        formData.append("file", file);-->
+<!--        const res = await fetch("/predict/", {-->
+<!--          method: "POST",-->
+<!--          body: formData-->
+<!--        });-->
+<!--        const data = await res.json();-->
+<!--        document.getElementById('result').innerText = "Predicted Emotion: " + data.emotion;-->
+<!--      }-->
+<!--    </script>-->
+<!--  </body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Audio Analyzer</title>
+    <script src="https://kit.fontawesome.com/93371e03c6.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md text-center space-y-6">
+      <h1 class="text-2xl font-bold text-gray-800">🎙️ Audio Analyzer</h1>
+
+      <!-- File Upload -->
+      <div>
+        <label class="block mb-2 text-sm font-medium text-gray-700">Upload Audio</label>
+        <input
+          type="file"
+          id="fileInput"
+          accept="audio/*"
+          class="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full
+                 file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700
+                 hover:file:bg-blue-100"
+        />
+      </div>
+
+      <!-- Record Button -->
+      <div class="flex justify-center my-4">
+        <button
+          id="recordBtn"
+          class="w-16 h-16 flex items-center justify-center rounded-full bg-gray-400 hover:bg-gray-500 transition duration-300 text-white text-2xl shadow-lg focus:outline-none"
+          title="Start Recording"
+        >
+          <i class="fa-solid fa-microphone"></i>
+        </button>
+      </div>
+
+      <!-- Response Message -->
+      <p id="response" class="text-gray-700 font-medium min-h-[1.5em]"></p>
+    </div>
+
+    <script type="text/javascript" src="../static/app.js"></script>
   </body>
 </html>
+

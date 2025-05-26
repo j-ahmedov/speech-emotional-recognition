@@ -7,7 +7,7 @@ from sklearn.preprocessing import LabelEncoder
 from torch.utils.data import DataLoader, TensorDataset
 from app.models import EmotionRecognitionModel
 
-actor = sys.argv[1]  # f1, f2, ..., m3
+actor = sys.argv[1]  # e.g., f1 or m2 from command line
 data = np.load(f"preprocessed_data/emovo_{actor}.npy", allow_pickle=True)
 
 X = np.array([x[0] for x in data])

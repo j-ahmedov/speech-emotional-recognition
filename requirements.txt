@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+flwr[simulation]
+torch
+librosa
+numpy
+scikit-learn
+pydantic

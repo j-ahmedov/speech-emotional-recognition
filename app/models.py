@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 from pathlib import Path
 
+
 class EmotionRecognitionModel(nn.Module):
     def __init__(self):
         super(EmotionRecognitionModel, self).__init__()

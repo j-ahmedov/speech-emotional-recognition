@@ -1,7 +1,6 @@
 import flwr as fl
 import numpy as np
 import torch
-from flwr.server.strategy import FedAvg
 from app.models import EmotionRecognitionModel
 from pathlib import Path
 from flwr.common import parameters_to_ndarrays

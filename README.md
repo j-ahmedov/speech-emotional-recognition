@@ -1,6 +1,6 @@
 <h2>Speech Emotion Recognition</h2>
 
-This project a full project with ready trained AI model to detect the emotion of the speaker. You can either upload an audio file or record your voice.<br><br>
+This project is a full project with ready trained AI model to detect the emotion of the speaker. You can either upload an audio file or record your voice.<br><br>
 Before running this project make sure you have installed the followings on your computer:<br>
 <ul>
 <li><a href="https://www.ffmpeg.org/download.html">ffmpeg</a> package</li>

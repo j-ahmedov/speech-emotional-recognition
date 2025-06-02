@@ -8,7 +8,7 @@ Before running this project, make sure you have installed the following on your 
 </ul>
 <br>
 
-Then you should open terminal on your project and run following to install necessary libraries:
+Then, you should open the terminal in your project directory and run the following to install the necessary libraries:
 <pre>pip3 install -r requirements.txt</pre>
 <br>
 
